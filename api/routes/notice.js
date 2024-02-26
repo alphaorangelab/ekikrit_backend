@@ -4,6 +4,31 @@ const Notice = require("../model/noticeSchema");
 
 const checkAuth = require("../middleware/check-auth");
 
+router.post("/", checkAuth, async (req, res) => {
+    const { notice, noticeUrl } = req.body;
+
+    try {
+        // Create a new notice instance
+        const newNotice = new Notice({
+            notice: notice,
+            noticeUrl: noticeUrl,
+        });
+
+        // Save the new notice
+        const savedNotice = await newNotice.save();
+
+        return res
+            .status(201)
+            .json({
+                message: "Notice created successfully",
+                notice: savedNotice,
+            });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
 router.get("/", async (req, res, next) => {
     try {
         const allNotices = await Notice.find();

@@ -8,9 +8,10 @@ const userRoute = require("./api/routes/user");
 const noticeRoute = require("./api/routes/notice");
 const uploadRoute = require("./api/routes/fileUpload");
 const galleryRoute = require("./api/routes/gallery");
+const healthRoute = require("./api/routes/health");
 
 mongoose.connect(
-    "mongodb+srv://avinashshrestha2017:password2024@ekikrit.pw0ji6u.mongodb.net/?retryWrites=true&w=majority"
+    "mongodb+srv://ekikrit12:GcdXxsb0rPunf4v8@cluster0.n6l8fkz.mongodb.net/?retryWrites=true&w=majority"
 );
 
 mongoose.connection.on("error", (error) => {
@@ -30,6 +31,7 @@ app.use("/login", userRoute);
 app.use("/notice", noticeRoute);
 app.use("/upload", uploadRoute);
 app.use("/gallery", galleryRoute);
+app.use("/health", healthRoute);
 app.use("/uploads", express.static(uploadDirectory));
 
 module.exports = app;

@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 const Gallery = require("../model/gallerySchema");
 
 const checkAuth = require("../middleware/check-auth");
+const fs = require("fs");
+const path = require("path");
+const { promisify } = require("util");
+const unlinkAsync = promisify(fs.unlink);
 
 router.get("/", async (req, res, next) => {
     try {
@@ -85,13 +89,54 @@ router.delete("/:id", async (req, res) => {
     const { id } = req.params;
 
     try {
-        // Find the document by ID and remove it
-        const deletedGalleryItem = await Gallery.findByIdAndDelete(id);
+        // Find the document by ID
+        const deletedGalleryItem = await Gallery.findById(id);
 
-        // Check if the document was found and deleted
+        // Check if the document was found
         if (!deletedGalleryItem) {
             return res.status(404).json({ message: "Gallery item not found" });
         }
+
+        // Ensure that the imageList is not empty
+        if (
+            !deletedGalleryItem.imageList ||
+            deletedGalleryItem.imageList.length === 0
+        ) {
+            return res
+                .status(400)
+                .json({ message: "Image list is empty for the gallery item" });
+        }
+
+        // Delete each file in the imageList
+        for (const image of deletedGalleryItem.imageList) {
+            // Ensure that the imageUrl is set in the image object
+            if (!image.imageUrl) {
+                console.error("Image URL is missing for image:", image);
+                continue; // Skip to the next image if imageUrl is missing
+            }
+
+            // Extract the filename from the imageUrl
+            const filename = path.basename(image.imageUrl);
+            console.log(filename, __dirname, "file names");
+
+            // Construct the file path
+            const filePath = path.resolve(
+                __dirname,
+                "..",
+                "..",
+                "uploads",
+                filename
+            );
+            // console.log(filePath, "file path");
+
+            // Delete the corresponding file from the upload folder
+            await unlinkAsync(filePath);
+
+            // console.log("File deleted successfully:", filePath);
+        }
+
+        // Remove the document from the database
+        await Gallery.findByIdAndDelete(id);
 
         res.status(200).json({
             message: "Gallery item deleted successfully",
