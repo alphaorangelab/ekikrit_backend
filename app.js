@@ -33,5 +33,8 @@ app.use("/upload", uploadRoute);
 app.use("/gallery", galleryRoute);
 app.use("/health", healthRoute);
 app.use("/uploads", express.static(uploadDirectory));
+app.get("/", (req, res) => {
+    res.send("Server is running");
+});
 
 module.exports = app;
