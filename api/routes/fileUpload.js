@@ -5,6 +5,8 @@ const checkAuth = require("../middleware/check-auth");
 const Jimp = require("jimp");
 const path = require("path");
 
+const baseApiUrl = require("../../config");
+
 // Storage configuration for multer
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -39,7 +41,7 @@ router.post("/", checkAuth, upload.array("files", 5), async (req, res) => {
 
         // Construct URLs for the compressed images
         const compressedFileUrls = compressedFileNames.map(
-            (filename) => `http://localhost:3000/uploads/${filename}`
+            (filename) => `${baseApiUrl}/uploads/${filename}`
         );
 
         res.json({
