@@ -20,7 +20,7 @@ const upload = multer({ storage: storage });
 
 // Route to handle file uploads
 router.post("/upload", checkAuth, upload.array("files", 5), (req, res) => {
-    const urls = req.files.map(file => `/${file.path}`); // Adjust URL path as needed
+    const urls = req.files.map((file) => `/${file.path}`); // Adjust URL path as needed
     return res.status(200).json({ urls });
 });
 
@@ -50,6 +50,7 @@ router.post("/", checkAuth, async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const allNotices = await Notice.find();
+        console.log(allNotices, "allNotices");
         return res.json(allNotices);
     } catch (error) {
         console.error(error);
@@ -58,8 +59,11 @@ router.get("/", async (req, res) => {
 });
 
 router.put("/:id", checkAuth, async (req, res) => {
+    console.log("Incoming Request:", req.params, req.body); // Log the params and body
     const { id } = req.params;
     const { notice, noticeUrls } = req.body;
+
+    console.log(notice, noticeUrls, "at the this");
 
     try {
         const updatedData = {
@@ -69,6 +73,7 @@ router.put("/:id", checkAuth, async (req, res) => {
         const updatedNotice = await Notice.findByIdAndUpdate(id, updatedData, {
             new: true,
         });
+        console.log(updatedNotice, "updated notice");
 
         if (!updatedNotice) {
             return res.status(404).json({ message: "Notice not found" });

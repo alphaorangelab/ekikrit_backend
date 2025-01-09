@@ -11,8 +11,11 @@ const galleryRoute = require("./api/routes/gallery");
 const healthRoute = require("./api/routes/health");
 
 // MongoDB connection
+// mongoose.connect(
+//     "mongodb+srv://sanish:mongodb@ekikrit-cluster.djzio.mongodb.net/"
+// );
 mongoose.connect(
-    "mongodb+srv://sanish:mongodb@ekikrit-cluster.djzio.mongodb.net/"
+    "mongodb+srv://ekikrit12:GcdXxsb0rPunf4v8@cluster0.n6l8fkz.mongodb.net/?retryWrites=true&w=majority"
 );
 
 mongoose.connection.on("error", (error) => {
@@ -43,8 +46,6 @@ app.use("/upload", uploadRoute);
 
 app.use("/gallery", galleryRoute);
 app.use("/health", healthRoute);
-
-
 
 app.use("/uploads", express.static(uploadDirectory));
 app.get("/", (req, res) => {

@@ -6,7 +6,11 @@ const Notice = require("./api/model/noticeSchema");
 const User = require("./api/model/userSchema");
 
 // Replace this with your actual MongoDB connection string
-const mongoDBURI = "mongodb+srv://sanish:mongodb@ekikrit-cluster.djzio.mongodb.net/";
+// const mongoDBURI =
+//     "mongodb+srv://avinash:3xNx71gKkd2RfQs5@ekikrit-cluster.djzio.mongodb.net/";
+
+const mongoDBURI =
+    "mongodb+srv://ekkrit:BI6MFrHw2xzjZMpa@cluster.mongodb.net/ekikrit?retryWrites=true&w=majority";
 
 mongoose
     .connect(mongoDBURI)
@@ -53,7 +57,11 @@ mongoose
         const hashedPassword = await bcrypt.hash("securepassword", 10); // Hash the password
 
         const users = [
-            { _id: new mongoose.Types.ObjectId(), userName: "testuser", password: hashedPassword }, // Use hashed password
+            {
+                _id: new mongoose.Types.ObjectId(),
+                userName: "testuser",
+                password: hashedPassword,
+            }, // Use hashed password
         ];
 
         // Save data
