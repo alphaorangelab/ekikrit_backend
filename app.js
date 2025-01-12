@@ -10,12 +10,8 @@ const uploadRoute = require("./api/routes/fileUpload");
 const galleryRoute = require("./api/routes/gallery");
 const healthRoute = require("./api/routes/health");
 
-// MongoDB connection
-// mongoose.connect(
-//     "mongodb+srv://sanish:mongodb@ekikrit-cluster.djzio.mongodb.net/"
-// );
 mongoose.connect(
-    "mongodb+srv://ekikrit12:GcdXxsb0rPunf4v8@cluster0.n6l8fkz.mongodb.net/?retryWrites=true&w=majority"
+    "mongodb+srv://ekkritkrishak:a0H4XvA4LC5LJbnv@echalancluster.cl716.mongodb.net/?retryWrites=true&w=majority&appName=EchalanCluster"
 );
 
 mongoose.connection.on("error", (error) => {
