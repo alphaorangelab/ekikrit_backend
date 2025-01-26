@@ -26,7 +26,8 @@ const uploadDirectory = path.join(__dirname, "uploads");
 
 // CORS options
 const corsOptions = {
-    origin: "http://localhost:5173", // Allow requests from this origin
+    // origin: "http://localhost:5173", // Allow requests from this origin
+    origin: "https://ekikritkrishaksaccos.com.np", // prod 
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
     credentials: true, // Allow credentials (like cookies)
 };
