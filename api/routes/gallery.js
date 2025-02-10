@@ -98,7 +98,10 @@ router.delete("/:id", async (req, res) => {
         }
 
         // Delete each file in the imageList
-        if (deletedGalleryItem.imageList && deletedGalleryItem.imageList.length > 0) {
+        if (
+            deletedGalleryItem.imageList &&
+            deletedGalleryItem.imageList.length > 0
+        ) {
             for (const image of deletedGalleryItem.imageList) {
                 // Ensure that the imageUrl is set in the image object
                 if (!image.imageUrl) {
@@ -143,6 +146,5 @@ router.delete("/:id", async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 });
-
 
 module.exports = router;
